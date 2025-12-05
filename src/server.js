@@ -5,6 +5,7 @@ import { router } from "./app/routes/index.js";
 import { seedSuperAdmin } from "./app/utils/seedSuperAdmin.js";
 import mongoose from "mongoose";
 import { envVars } from "./app/config/env.js";
+import { connectDB } from "./app/config/db.js";
 
 
 const app = express();
@@ -20,7 +21,7 @@ app.get("/", (req, res) => {
 });
 
 
-await mongoose.connect(envVars.DB_URL);
+await connectDB()
 console.log("Connected to DB");
 if (process.env.ENVAIRONMENT == 'development') {
   const PORT = 5000;
