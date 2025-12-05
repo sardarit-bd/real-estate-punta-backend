@@ -9,15 +9,20 @@ import { connectDB } from "./app/config/db.js";
 
 
 const app = express();
-app.use(cors());
 app.use(express.json());
-app.use(cors({
-  origin: ['https://real-estate-punta.vercel.app', 'http://localhost:3000']
-}))
+app.use(
+  cors({
+    origin: [
+      'https://real-estate-punta.vercel.app',
+      'http://localhost:3000'
+    ],
+    credentials: true,
+  })
+);
 
 app.use("/api", router);
 app.get("/", (req, res) => {
-  res.send("Coffee-Pastry Pairing API is running.");
+  res.send("Server is running.");
 });
 
 
@@ -30,15 +35,15 @@ app.get("/", (req, res) => {
 // await seedSuperAdmin()
 let server
 
-const startServer = async() => {
-  try{
+const startServer = async () => {
+  try {
     await mongoose.connect(envVars.DB_URL)
     console.log('Connected to DB')
 
     server = app.listen(process.env.PORT, () => {
       console.log(`Server is listening to port ${process.env.PORT}`)
     })
-  }catch(err){
+  } catch (err) {
     console.log(err)
   }
 }
