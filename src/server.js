@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import { router } from "./app/routes/index.js";
 
 
 dotenv.config();
@@ -12,6 +13,7 @@ app.use(cors({
     origin: ['https://coffee-mocha-chi.vercel.app']
 }))
 
+app.use("/api", router);
 app.get("/", (req, res) => {
   res.send("Coffee-Pastry Pairing API is running.");
 });

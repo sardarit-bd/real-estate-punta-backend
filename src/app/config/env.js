@@ -1,0 +1,10 @@
+export const envVars = {
+    SUPER_ADMIN_EMAIL: '',
+    SUPER_ADMIN_PASSWORD: '',
+    BCRYPT_SALT_ROUND: '',
+
+    JWT_ACCESS_SECRET: '',
+    JWT_ACCESS_EXPIRES: '',
+    JWT_REFRESH_SECRET: '',
+    JWT_REFRESH_EXPIRES: ''
+}
