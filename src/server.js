@@ -21,7 +21,7 @@ app.get("/", (req, res) => {
 });
 
 
-await connectDB()
+// await connectDB()
 console.log("Connected to DB");
 if (process.env.ENVAIRONMENT == 'development') {
   const PORT = 5000;
