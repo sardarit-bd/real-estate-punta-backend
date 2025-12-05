@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(cors({
-  origin: ['https://coffee-mocha-chi.vercel.app']
+  origin: ['https://real-estate-punta.vercel.app']
 }))
 
 app.use("/api", router);
