@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
 });
 
 
-await mongoose.connect(envVars.DB_URL);
+// await mongoose.connect(envVars.DB_URL);
 console.log("Connected to DB");
 if (process.env.ENVAIRONMENT == 'development') {
   const PORT = 5000;
