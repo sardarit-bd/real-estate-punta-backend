@@ -12,7 +12,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use(cors({
-  origin: ['https://real-estate-punta.vercel.app']
+  origin: ['https://real-estate-punta.vercel.app', "http://localhost:3000"]
 }))
 
 app.use("/api", router);
