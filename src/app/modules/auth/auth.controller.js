@@ -4,6 +4,7 @@ import { sendResponse } from "../../utils/sendResponse.js";
 import httpStatus from "http-status-codes";
 import { AuthServices } from "./auth.services.js";
 import { setAuthCookie } from "../../utils/setCookies.js";
+import { envVars } from "../../config/env.js";
 
 const createUser = catchAsync(
     async (req, res, next) => {
