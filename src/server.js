@@ -22,18 +22,12 @@ app.use(
 );
 
 app.use("/api", router);
+
 app.get("/", (req, res) => {
   res.send("Server is running.");
 });
 
 
-// await connectDB()
-// console.log("Connected to DB");
-// if (process.env.ENVAIRONMENT == 'development') {
-//   const PORT = 5000;
-//   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-// }
-// await seedSuperAdmin()
 let server
 
 const startServer = async () => {

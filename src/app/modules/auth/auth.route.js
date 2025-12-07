@@ -6,7 +6,7 @@ import { checkAuth } from "../../middlewares/checkAuth.js";
 const router = Router();
 
 router.post("/register", AuthControllers.createUser);
-router.get('/me', checkAuth('owner'), AuthControllers.getMe)
+router.get('/me', checkAuth('owner', 'super_admin'), AuthControllers.getMe)
 router.post("/login", AuthControllers.credentialsLogin);
 router.post("/logout", AuthControllers.logout);
 
