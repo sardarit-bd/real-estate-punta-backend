@@ -119,7 +119,7 @@ export const forgotPassword = async (payload) => {
 
   const resetUrlLink = `${envVars.FRONTEND_URL}/reset-password?id=${user._id}&token=${resetToken}`;
   console.log(resetUrlLink)
-  sendResetPasswordEmail(user.email, resetUrlLink);
+  await sendResetPasswordEmail(user.email, resetUrlLink);
   console.log("done")
   return true
 }
