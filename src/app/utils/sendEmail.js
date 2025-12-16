@@ -73,7 +73,7 @@ export const sendResetPasswordEmail = async (email, resetUrl) => {
         };
 
         await transporter.sendMail(mailOptions);
-
+        console.log('sent')
     } catch (error) {
         console.error("Password reset email error:", error);
         throw new Error("Failed to send password reset email");

@@ -54,7 +54,6 @@ const credentialsLogin = async (payload) => {
     isUserExist.password
   );
 
-  console.log(isPasswordMatched)
   if (!isPasswordMatched) {
     throw new AppError(httpStatus.BAD_REQUEST, "Incorrect Password");
   }
@@ -119,9 +118,9 @@ export const forgotPassword = async (payload) => {
 
 
   const resetUrlLink = `${envVars.FRONTEND_URL}/reset-password?id=${user._id}&token=${resetToken}`;
-
+  console.log(resetUrlLink)
   sendResetPasswordEmail(user.email, resetUrlLink);
-
+  console.log("done")
   return true
 }
 
