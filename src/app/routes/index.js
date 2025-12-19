@@ -3,6 +3,7 @@ import { AuthRoutes } from "../modules/auth/auth.route.js";
 import { PropertiesRoutes } from "../modules/properties/properties.route.js";
 import { UploadRoutes } from "../modules/upload/upload.routes.js";
 import { PaymentRoutes } from "../payments/payments.route.js";
+import { LeaseRoutes } from "../modules/lease/lease.routes.js";
 
 export const router = Router()
 
@@ -22,7 +23,11 @@ const moduleRoutes = [
     {
         path: '/payment',
         route: PaymentRoutes
-    }
+    },
+    {
+        path: '/leases',
+        route: LeaseRoutes,
+    },
 ]
 
 moduleRoutes.forEach(route => {
