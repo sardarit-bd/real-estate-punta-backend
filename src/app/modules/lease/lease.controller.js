@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import AppError from "../../errorHelpers/AppError.js";
 import { catchAsync } from "../../utils/catchAsync.js";
 import { User } from "../auth/auth.model.js";
@@ -558,9 +559,6 @@ const restoreLease = catchAsync(async (req, res) => {
     data: lease
   });
 });
-
-
-
 
 
 export {
