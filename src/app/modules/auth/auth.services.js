@@ -12,25 +12,27 @@ const createUser = async (payload) => {
   const { email, password, ...rest } = payload;
 
   const isUserExist = await User.findOne({ email });
-
   if (isUserExist) {
     throw new AppError(httpStatus.BAD_REQUEST, "User Already Exist");
   }
+
   const hashPassword = await bcryptjs.hash(
     password,
     Number(envVars.BCRYPT_SALT_ROUND)
-  )
+  );
 
   const user = await User.create({
     email,
     password: hashPassword,
     ...rest,
+    profile: payload.profile ?? {},
   });
 
   const userObj = user.toObject();
   delete userObj.password;
   return userObj;
 };
+
 const getMe = async (userId) => {
   const user = await User.findById(userId).select("-password");
 
@@ -40,6 +42,37 @@ const getMe = async (userId) => {
 
   return user;
 };
+
+const updateMe = async (userId, payload) => {
+  const user = await User.findById(userId);
+
+  if (!user) {
+    throw new AppError(httpStatus.NOT_FOUND, "User Not Found");
+  }
+
+  if (payload.name !== undefined) {
+    user.name = payload.name;
+  }
+
+  if (payload.profile) {
+    user.profile = {
+      ...user.profile,
+      ...payload.profile,
+      address: {
+        ...user.profile?.address,
+        ...payload.profile?.address,
+      },
+    };
+  }
+
+  await user.save();
+
+  const userObj = user.toObject();
+  delete userObj.password;
+  return userObj;
+};
+
+
 const deleteMe = async (userId) => {
   const user = await User.findById(userId);
   if (!user) {
@@ -53,7 +86,9 @@ const deleteMe = async (userId) => {
 const credentialsLogin = async (payload) => {
   const { email, password } = payload;
 
-  const isUserExist = await User.findOne({ email: email });
+  const isUserExist = await User
+    .findOne({ email })
+    .select('+password');
 
   if (!isUserExist) {
     throw new AppError(httpStatus.BAD_REQUEST, "User does not exist");
@@ -69,14 +104,16 @@ const credentialsLogin = async (payload) => {
   }
 
   const { accessToken, refreshToken } = createUserTokens(isUserExist);
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   const { password: pass, ...rest } = isUserExist.toObject();
+
   return {
     accessToken,
     refreshToken,
     user: rest,
   };
 };
+
 
 
 
@@ -135,7 +172,7 @@ export const forgotPassword = async (payload) => {
 
 export const resetPassword = async (payload, decodedToken) => {
   const { password } = payload;
- 
+
   const user = await User.findById(decodedToken.userId);
 
   if (!user) {
@@ -154,6 +191,7 @@ export const AuthServices = {
   credentialsLogin,
   createUser,
   getMe,
+  updateMe,
   changePassword,
   resetPassword,
   forgotPassword,

@@ -34,6 +34,20 @@ const getMe = catchAsync(
     }
 );
 
+const updateMe = catchAsync(async (req, res) => {
+  const userId = req.user.userId;
+
+  const updatedUser = await AuthServices.updateMe(userId, req.body);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Profile updated successfully",
+    data: updatedUser,
+  });
+});
+
+
 const deleteMe = catchAsync(
     async (req, res, next) => {
         const verifiedToken = req.user;
@@ -152,6 +166,7 @@ export const AuthControllers = {
     logout,
     createUser,
     getMe,
+    updateMe,
     changePassword,
     forgotPassword,
     resetPassword,

@@ -8,6 +8,8 @@ const router = Router();
 
 router.post("/register", AuthControllers.createUser);
 router.get('/me', checkAuth(Role.OWNER, Role.TENANT, Role.ADMIN, Role.SUPER_ADMIN), AuthControllers.getMe)
+router.patch("/users/me",checkAuth(Role.ADMIN, Role.OWNER, Role.TENANT, Role.SUPER_ADMIN), AuthControllers.updateMe);
+
 router.delete('/delete-me', checkAuth(Role.OWNER, Role.TENANT, Role.ADMIN), AuthControllers.deleteMe)
 
 router.post("/login", AuthControllers.credentialsLogin);
