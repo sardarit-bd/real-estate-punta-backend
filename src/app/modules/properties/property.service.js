@@ -25,6 +25,7 @@ const createProperty = async (payload, userId) => {
   // Create property
   const property = await Property.create({
     ...rest,
+    images: images || [],
     owner: userId,
     status: 'active'
   });
