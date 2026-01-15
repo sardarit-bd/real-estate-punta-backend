@@ -3,7 +3,7 @@ import AppError from "../../errorHelpers/AppError.js";
 import httpStatus from 'http-status-codes'
 import bcryptjs from "bcryptjs";
 import { createUserTokens } from "../../utils/userTokens.js";
-import { User } from "./auth.model.js";
+import { Owner, Tenant, User } from "./auth.model.js";
 import { envVars } from "../../config/env.js";
 import { sendResetPasswordEmail } from "../../utils/sendEmail.js";
 import jwt from 'jsonwebtoken'
@@ -28,6 +28,16 @@ const createUser = async (payload) => {
     profile: payload.profile ?? {},
   });
 
+  if (user.role === 'tenant') {
+    await Tenant.create({
+      user: user._id
+    })
+  }
+  if (user.role === 'owner') {
+    await Owner.create({
+      user: user._id
+    })
+  }
   const userObj = user.toObject();
   delete userObj.password;
   return userObj;
@@ -120,7 +130,7 @@ const credentialsLogin = async (payload) => {
 export const changePassword = async (payload, decodedToken) => {
 
   const newPassword = payload.newPassword;
-  const oldPassword = payload.oldPassword;
+  const oldPassword = payload.currentPassword;
 
   const user = await User.findById(decodedToken.userId);
 
@@ -164,7 +174,7 @@ export const forgotPassword = async (payload) => {
   });
 
 
-  const resetUrlLink = `${envVars.FRONTEND_URL}/reset-password?id=${user._id}&token=${resetToken}`;
+  const resetUrlLink = `${envVars.FRONTEND_URL}/pages/reset-password?id=${user._id}&token=${resetToken}`;
   await sendResetPasswordEmail(user.email, resetUrlLink);
   return true
 }

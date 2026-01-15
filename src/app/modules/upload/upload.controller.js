@@ -58,6 +58,7 @@ const uploadMultipleImages = async (req, res) => {
 
 // Upload PDF/document
 const uploadDocument = async (req, res) => {
+    console.log('In uploadDocument controller');
     try {
         if (!req.file) {
             return res.status(400).json({

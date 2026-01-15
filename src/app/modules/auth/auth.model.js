@@ -1,11 +1,11 @@
 import { model, Schema } from "mongoose";
 
 export const Role = {
-  TENANT: "tenant",
-  OWNER: "owner",
-  ADMIN: "admin",
-  SUPER_ADMIN: "super_admin",
-};
+    TENANT: 'tenant',
+    OWNER: 'owner',
+    ADMIN: 'admin',
+    SUPER_ADMIN: 'super_admin'
+}
 
 const userSchema = new Schema(
   {
@@ -31,18 +31,91 @@ const userSchema = new Schema(
       enum: Object.values(Role),
       default: Role.TENANT,
     },
+    avatar: {
+        type: String,
+    },
+}, {
+    timestamps: true,
+    versionKey: false
+})
 
-    // ===== Profile =====
-    profile: {
-      phone: { type: String, default: "" },
-      company: { type: String, default: "" },
-      bio: { type: String, default: "" },
+const tenantSchema = new Schema({
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+    },
+    phoneNumber: {
+        type: String,
+    },
+    address: {
+        type: String,
+    },
+    country: {
+        type: String,
+    },
+    city: {
+        type: String,
+    },
+    phone: {
+        type: String,
+    },
+    documents: [{
+        name: {
+            type: String,
+            required: true
+        },
+        url: {
+            type: String,
+            required: true
+        },
+        uploadedAt: {
+            type: Date,
+            default: Date.now
+        }
+    }],
+}, {
+    timestamps: true,
+    versionKey: false
+})
 
-      address: {
-        street: { type: String, default: "" },
-        city: { type: String, default: "" },
-        country: { type: String, default: "" },
-      },
+const ownerSchema = new Schema({
+    user: {
+        type: Schema.Types.ObjectId,
+        ref: 'User',
+    },
+    phoneNumber: {
+        type: String,
+    },
+    address: {
+        type: String,
+    },
+    country: {
+        type: String,
+    },
+    city: {
+        type: String,
+    },
+    phone: {
+        type: String,
+    },
+    documents: [{
+        name: {
+            type: String,
+            required: true
+        },
+        url: {
+            type: String,
+            required: true
+        },
+        uploadedAt: {
+            type: Date,
+            default: Date.now
+        }
+    }],
+}, {
+    timestamps: true,
+    versionKey: false
+})
 
       avatar: { type: String, default: "" },
     },
@@ -53,4 +126,6 @@ const userSchema = new Schema(
   }
 );
 
-export const User = model("User", userSchema);
+export const User = model("User", userSchema)
+export const Tenant = model("Tenant", tenantSchema)
+export const Owner = model("Owner", ownerSchema)

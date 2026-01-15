@@ -22,7 +22,7 @@ router.post(
 // PDF/document upload
 router.post(
   '/document',
-  upload.single('document'),
+  upload.single('file'),
   uploadControllers.uploadDocument
 );
 
